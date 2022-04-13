@@ -1,15 +1,12 @@
 import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
 import {Bowling} from './src/Bowling';
 
 var cors = require('cors')
 
-dotenv.config();
-
 let bowling: Bowling;
 
 const app: Express = express();
-const port = process.env.PORT;
+const port = 8000;
 app.use(express.json());
 app.use(cors());
 
@@ -20,10 +17,11 @@ app.get('/', (req: Request, res: Response) => {
 app.post('/', (req: Request, res: Response) => {
   bowling = new Bowling();
   if (req.body) {
-    let score = bowling.getScore2(req.body)
-    console.log('Got ' + req.body + ' = ' + score.score)
+    let updatedScoreboard = bowling.getScore2(req.body.throws)
+    console.log('throws', updatedScoreboard.throws)
+    console.log('score', updatedScoreboard.score)
     
-    res.json(score);
+    res.json({throws: updatedScoreboard.throws, score: updatedScoreboard.score ? updatedScoreboard.score : 0});
   } else {
     res.json({error: "error"})
   }

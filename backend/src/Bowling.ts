@@ -45,8 +45,11 @@ export class Bowling {
     return score;
   }
 
-  public getScore2(throws: Array<number>) : Scoreboard {
-    this.throws = throws;
+  public getScore2(throwHistory: number[]) : Scoreboard {
+
+    throwHistory.forEach(value => {
+      this.throws.push(value)
+    })
     return {
       throws: this.throws,
       score: this.getScore()

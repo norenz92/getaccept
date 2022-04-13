@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Scoreboard } from './types/Scoreboard';
 import ScoreButtons from './components/ScoreButtons';
+import { ScoreboardView } from './components/ScoreboardView';
+import {Container} from '@mui/material';
+import { Frames } from './components/Frames';
 
 function App() {
 
@@ -11,31 +14,37 @@ function App() {
     score: 0
   });
 
-  const addThrow = async (pins: number) => {
-    let test: number[] = [];
-    test.concat(scoreboard.throws)
-    test.push(5)
-    test.push(4)
-    test.push(2)
-    console.log(test)
+  const calculateScore = async (newScoreboard: Scoreboard) : Promise<void> => {
     let res = await fetch('http://localhost:8000/', {
       method: 'POST',
-      body: JSON.stringify(test)
+      body: JSON.stringify(newScoreboard),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
+
     if (res.ok) {
-      let scoreboard = await res.json()
-      console.log(scoreboard)
-      setScoreboard(scoreboard);
+      await res.json().then((newScoreboard: Scoreboard) => {
+        console.log(newScoreboard)
+      })
     } else {
       console.log('Error')
     }
   }
 
+  const addThrow = (value: number) => {
+    let newScoreboard: Scoreboard = {...scoreboard};
+    newScoreboard.throws.push(value)
+    calculateScore(newScoreboard)
+  }
+
   return (
-    <div id="container">
-      <button onClick={() => addThrow(10)}>Test</button>
-      <ScoreButtons/>
-    </div>
+    <Container maxWidth="lg">
+      <ScoreboardView>
+        <ScoreButtons onThrow={(value) => addThrow(value)}/>
+        <Frames throws={scoreboard.throws}/>
+      </ScoreboardView>
+    </Container>
   );
 }
 
