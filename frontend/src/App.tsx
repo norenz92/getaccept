@@ -1,49 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Scoreboard } from './types/Scoreboard';
-import ScoreButtons from './components/ScoreButtons';
-import { ScoreboardView } from './components/ScoreboardView';
 import {Container} from '@mui/material';
-import { Frames } from './components/Frames';
+import { ScoreboardView } from './components/ScoreboardView';
+import {Frame, Scoreboard} from '../../types/types';
+
+const initialScoreboard = {
+  frames: [1,2,3,4,5,6,7,8,9,10].map((value, i) => {
+    let frame: Frame = {
+      throws: value === 10 ? [undefined, undefined, undefined] : [undefined, undefined]
+    }
+    return frame;
+  }),
+  score: 0
+}
 
 function App() {
 
-  const [scoreboard, setScoreboard] = React.useState<Scoreboard>({
-    throws: [],
-    score: 0
-  });
+  const [scoreboard, setScoreBoard] = useState<Scoreboard>(initialScoreboard)
 
-  const calculateScore = async (newScoreboard: Scoreboard) : Promise<void> => {
-    let res = await fetch('http://localhost:8000/', {
-      method: 'POST',
-      body: JSON.stringify(newScoreboard),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-
-    if (res.ok) {
-      await res.json().then((newScoreboard: Scoreboard) => {
-        console.log(newScoreboard)
-      })
-    } else {
-      console.log('Error')
-    }
-  }
-
-  const addThrow = (value: number) => {
-    let newScoreboard: Scoreboard = {...scoreboard};
-    newScoreboard.throws.push(value)
-    calculateScore(newScoreboard)
+  const calculateScore = (scoreboard: Scoreboard) : void => {
+    console.log(scoreboard)
   }
 
   return (
-    <Container maxWidth="lg">
-      <ScoreboardView>
-        <ScoreButtons onThrow={(value) => addThrow(value)}/>
-        <Frames throws={scoreboard.throws}/>
-      </ScoreboardView>
+    <Container maxWidth="xl">
+      <ScoreboardView scoreboard={scoreboard} onChange={calculateScore}/>
     </Container>
   );
 }
