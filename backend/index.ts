@@ -1,9 +1,7 @@
 import express, { Express, Request, Response } from 'express';
-import {Bowling} from './src/Bowling';
+import calculate from './src/calculate';
 
 var cors = require('cors')
-
-let bowling: Bowling;
 
 const app: Express = express();
 const port = 8000;
@@ -15,13 +13,9 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.post('/', (req: Request, res: Response) => {
-  bowling = new Bowling();
+  console.log(req.body)
   if (req.body) {
-    let updatedScoreboard = bowling.getScore2(req.body.throws)
-    console.log('throws', updatedScoreboard.throws)
-    console.log('score', updatedScoreboard.score)
-    
-    res.json({throws: updatedScoreboard.throws, score: updatedScoreboard.score ? updatedScoreboard.score : 0});
+    res.json(calculate(req.body))
   } else {
     res.json({error: "error"})
   }
