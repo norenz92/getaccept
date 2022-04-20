@@ -3,35 +3,198 @@ import {Frame, Scoreboard} from '../../types/types'
 
 describe("Calculate", () => {
 
-    const generateScoreboard = (pins: number) : Scoreboard => {
-        return {
-            frames: [1,2,3,4,5,6,7,8,9,10].map((value, i) => {
-              let frame: Frame = {
-                throws: i === 9 ? [pins, pins, pins] : [pins, pins]
-              }
-              return frame;
-            }),
-            score: 0
-        }
-    }
-
-    it("Calculates score", () => {
-    let scoreboard = generateScoreboard(2)
-    expect(calculate(scoreboard).score).toBe(40);
+    it("All twos", () => {
+      let data: Scoreboard = {
+        frames: [
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2, undefined]
+          }
+        ],
+        score: 0
+      }
+    expect(calculate(data).score).toBe(40);
     })
 
     it("Calculates all spares of 5", () => {
-        let scoreboard = generateScoreboard(5)
-        expect(calculate(scoreboard).score).toBe(150);
+      let data: Scoreboard = {
+        frames: [
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [5, 5, 5]
+          }
+        ],
+        score: 0
+    }
+        expect(calculate(data).score).toBe(150);
     })
 
-    it("Calculates all strikes", () => {
-        let scoreboard = generateScoreboard(10)
-        expect(calculate(scoreboard).score).toBe(300);
+    it("Mixed frames", () => {
+      let data: Scoreboard = {
+        frames: [
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [5, 5]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 3, 10]
+          }
+        ],
+        score: 0
+      }
+        expect(calculate(data).score).toBe(59);
     })
+
+    it("All twos, last three strikes", () => {
+      let data: Scoreboard = {
+        frames: [
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [2, 2]
+          },
+          {
+              throws: [10, 10, 10]
+          }
+        ],
+        score: 0
+    }
+      expect(calculate(data).score).toBe(66);
+  })
 
     it("All gutters", () => {
-        let scoreboard = generateScoreboard(0)
-        expect(calculate(scoreboard).score).toBe(0);
+      let data: Scoreboard = {
+        frames: [
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          },
+          {
+              throws: [0, 0]
+          }
+        ],
+        score: 0
+      }
+      expect(calculate(data).score).toBe(0);
     })
 })
