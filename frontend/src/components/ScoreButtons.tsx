@@ -2,13 +2,8 @@ import React from 'react';
 import {Button, ButtonGroup} from '@mui/material';
 
 type ButtonProps = {
-  onThrow?: (number: number) => void;
+  onThrow: (number: number) => void;
   disabled: boolean;
-}
-
-type Frame = {
-  first: string | number;
-  second: string | number;
 }
 
 export default function ScoreButtons({onThrow, disabled}: ButtonProps) {
@@ -17,36 +12,33 @@ export default function ScoreButtons({onThrow, disabled}: ButtonProps) {
 
   const onButtonClicked = (value: number) => {
     if (lastValue === null) {
+      console.log('A')
       if (value === 10) {
-      }
-      else if (value < 10) {
-        setLastValue(value)
+        console.log('B')
+        setLastValue(null)
       }
       else {
-        setLastValue(null)
+        console.log('C')
+        setLastValue(value)
       }
     }
     else {
       if (lastValue + value === 10) {
+        console.log('D')
         setLastValue(null)
       } else {
+        console.log('E')
         setLastValue(null)
       }
     }
-    if (onThrow) {
-      onThrow(value)
-    }
+    
+    onThrow(value)
+    
   }
 
   const buttonDisabled = (value: number) => {
     return lastValue === null ? false : lastValue + value > 10;
   }
-
-  /* const Button = ({value, disabled, onClick}: ButtonProps) => {
-    return (
-      <button id="scoreButton" disabled={buttonDisabled(value)} key={value} onClick={() => onButtonClicked(value)}>{value}</button>
-    )
-  } */
 
   const Buttons = () => {
     return (

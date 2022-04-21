@@ -37,7 +37,8 @@ describe("Calculate", () => {
               throws: [2, 2, undefined]
           }
         ],
-        score: 0
+        score: 0,
+        maxScore: 0
       }
     expect(calculate(data).score).toBe(40);
     })
@@ -76,7 +77,8 @@ describe("Calculate", () => {
               throws: [5, 5, 5]
           }
         ],
-        score: 0
+        score: 0,
+        maxScore: 0
     }
         expect(calculate(data).score).toBe(150);
     })
@@ -97,16 +99,16 @@ describe("Calculate", () => {
               throws: [5, 5]
           },
           {
-              throws: [2, 2]
+              throws: [3, 7]
           },
           {
-              throws: [2, 2]
+              throws: [5, 3]
           },
           {
-              throws: [2, 2]
+              throws: [1, 1]
           },
           {
-              throws: [2, 2]
+              throws: [10, 0]
           },
           {
               throws: [2, 2]
@@ -115,9 +117,10 @@ describe("Calculate", () => {
               throws: [2, 3, 10]
           }
         ],
-        score: 0
+        score: 0,
+        maxScore: 0
       }
-        expect(calculate(data).score).toBe(59);
+        expect(calculate(data).score).toBe(83);
     })
 
     it("All twos, last three strikes", () => {
@@ -154,10 +157,11 @@ describe("Calculate", () => {
               throws: [10, 10, 10]
           }
         ],
-        score: 0
+        score: 0,
+        maxScore: 0
     }
       expect(calculate(data).score).toBe(66);
-  })
+    })
 
     it("All gutters", () => {
       let data: Scoreboard = {
@@ -193,8 +197,49 @@ describe("Calculate", () => {
               throws: [0, 0]
           }
         ],
-        score: 0
+        score: 0,
+        maxScore: 0
       }
       expect(calculate(data).score).toBe(0);
+    })
+
+    it("All strikes", () => {
+      let data: Scoreboard = {
+        frames: [
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 0]
+          },
+          {
+              throws: [10, 10, 10]
+          }
+        ],
+        score: 0,
+        maxScore: 0
+      }
+      expect(calculate(data).score).toBe(300);
     })
 })

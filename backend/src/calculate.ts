@@ -16,14 +16,16 @@ const calculate = (scoreboard: Scoreboard) : Scoreboard => {
 
             // Check last frame
 
-            // if last frame is strike and first of last frame is strike
-            if (frameIsStrike(scoreboard.frames, i-1) && ((frame.throws[1] ?? 0) === 10)) scoreboard.frames[i-1].score = 20;
+            // If last two frames were strike and first of last is strike
+            if (frameIsStrike(scoreboard.frames, i-2) && frameIsStrike(scoreboard.frames, i-1) && ((frame.throws[0] ?? 0) === 10)) scoreboard.frames[i-2].score = 30;
+            // if last frame is strike and first and second of last frame is strike
+            if (frameIsStrike(scoreboard.frames, i-1) && ((frame.throws[0] ?? 0) === 10) && ((frame.throws[1] ?? 0) === 10)) scoreboard.frames[i-1].score = 30;
             // if last frame is strike and first of last frame is spare
-            if (frameIsStrike(scoreboard.frames, i-1) && ((frame.throws[1] ?? 0) + (frame.throws[2] ?? 0) === 10)) scoreboard.frames[i-1].score = 10 + (frame.throws[1] ?? 0);
+            if (frameIsStrike(scoreboard.frames, i-1) && ((frame.throws[0] ?? 0) + (frame.throws[1] ?? 0) === 10)) scoreboard.frames[i-1].score = 10 + (frame.throws[1] ?? 0);
             // if last frame is spare and first of last frame is strike
-            if (frameIsSpare(scoreboard.frames, i-1) && ((frame.throws[1] ?? 0) + (frame.throws[2] ?? 0) === 10)) scoreboard.frames[i-1].score = 20;
+            if (frameIsSpare(scoreboard.frames, i-1) && ((frame.throws[0] ?? 0) + (frame.throws[1] ?? 0) === 10)) scoreboard.frames[i-1].score = 20;
             // if last frame is spare and first of last frame is spare
-            if (frameIsSpare(scoreboard.frames, i-1) && ((frame.throws[1] ?? 0) + (frame.throws[2] ?? 0) === 10)) scoreboard.frames[i-1].score = 10 + (frame.throws[0] ?? 0);
+            if (frameIsSpare(scoreboard.frames, i-1) && ((frame.throws[0] ?? 0) + (frame.throws[1] ?? 0) === 10)) scoreboard.frames[i-1].score = 10 + (frame.throws[0] ?? 0);
 
 
             // if all strike
@@ -34,7 +36,7 @@ const calculate = (scoreboard: Scoreboard) : Scoreboard => {
             else if (((frame.throws[2] ?? 0) === 10) && ((frame.throws[0] ?? 0) + (frame.throws[1] ?? 0) === 10)) scoreboard.frames[i].score = 20;
             // if last spare
             else if (((frame.throws[0] ?? 0) < 10) && ((frame.throws[1] ?? 0) + (frame.throws[2] ?? 0) === 10)) scoreboard.frames[i].score = 10 + (frame.throws[0] ?? 0);
-
+            // just get the frame total
             else {
               scoreboard.frames[i].score = (frame.throws[0] ?? 0) + (frame.throws[1] ?? 0)
               scoreboard.frames[i].throws[2] = undefined

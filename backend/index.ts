@@ -13,7 +13,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.post('/', (req: Request, res: Response) => {
-  console.log(req.body)
+  console.log(JSON.stringify(req.body))
   if (req.body) {
     res.json(calculate(req.body))
   } else {
