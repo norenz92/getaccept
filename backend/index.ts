@@ -8,10 +8,6 @@ const port = 8000;
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
-});
-
 app.post('/', (req: Request, res: Response) => {
   console.log(JSON.stringify(req.body))
   if (req.body) {

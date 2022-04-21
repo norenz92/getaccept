@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {Scoreboard, Frame} from '../../../types/types';
 import ScoreButtons from './ScoreButtons';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 
 
 interface FrameProps {
@@ -28,8 +26,6 @@ export const ScoreboardView = () => {
   const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [scoreboard, setScoreboard] = useState<Scoreboard>(initialScoreboard);
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
-
-  const reset = () => setScoreboard(initialScoreboard)
 
   useEffect(() => {
     console.log('currentFrame updated: ' + currentFrame)
